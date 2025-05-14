@@ -22,7 +22,7 @@ class AGAM415ReabanProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
-	// Some Stuff for Later Use 
+
 	// Mesh for projectile
 
 	UPROPERTY(EditAnywhere)
@@ -31,10 +31,25 @@ class AGAM415ReabanProjectile : public AActor
 	UPROPERTY(EditAnywhere)
 	UMaterial* baseMat;
 
+	UPROPERTY()
+	FLinearColor randColor;
+
+	UPROPERTY(EditAnywhere)
+	UMaterialInterface* projMat;
+
+	UPROPERTY()
+	UMaterialInstanceDynamic* dmiMat;
+
+
 
 public:
 	AGAM415ReabanProjectile();
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay();
+
+public:
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);

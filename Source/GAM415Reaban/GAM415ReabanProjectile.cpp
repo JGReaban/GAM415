@@ -42,6 +42,23 @@ AGAM415ReabanProjectile::AGAM415ReabanProjectile()
 	InitialLifeSpan = 3.0f;
 }
 
+void AGAM415ReabanProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+	float ranNumX = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+	float ranNumY = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+	float ranNumZ = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
+
+	randColor = FLinearColor(ranNumX, ranNumY, ranNumZ, 1.0f);
+
+	dmiMat = UMaterialInstanceDynamic::Create(projMat, this);
+	
+	ballMesh->SetMaterial(0, dmiMat);
+
+	
+	dmiMat->SetVectorParameterValue("ProjColor", randColor);
+}
+
 void AGAM415ReabanProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
@@ -54,13 +71,11 @@ void AGAM415ReabanProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 
 	if (OtherActor != nullptr)
 	{
-		float ranNumX = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
-		float ranNumY = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
-		float ranNumZ = UKismetMathLibrary::RandomFloatInRange(0.f, 1.f);
-
+	
+		// Random Frame Number
 		float ranNumFrame = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
 
-		FVector4 randColor = FVector4(ranNumX, ranNumY, ranNumZ, 1.0f);
+		
 
 		// This is the size
 		FVector decalVector;
