@@ -6,6 +6,8 @@
 #include "Kismet/KismetMathlibrary.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 AGAM415ReabanProjectile::AGAM415ReabanProjectile() 
 {
@@ -72,10 +74,20 @@ void AGAM415ReabanProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 	if (OtherActor != nullptr)
 	{
 	
+
+		if (colorP)
+		{
+			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+			particleComp->SetNiagaraVariableLinearColor(FString("RandomColor"), randColor);
+			particleComp->SetNiagaraVariableLinearColor(FString("RandColor"), randColor);
+			ballMesh->DestroyComponent();
+			CollisionComp->BodyInstance.SetCollisionProfileName("NoCollision");
+		}
+
+
 		// Random Frame Number
 		float ranNumFrame = UKismetMathLibrary::RandomFloatInRange(0.f, 3.f);
 
-		
 
 		// This is the size
 		FVector decalVector;
