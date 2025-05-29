@@ -74,7 +74,7 @@ void AGAM415ReabanProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 	if (OtherActor != nullptr)
 	{
 	
-
+		// Particle Splatter
 		if (colorP)
 		{
 			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
