@@ -21,8 +21,12 @@ void APerlinProcTerrain::BeginPlay()
 {
 	Super::BeginPlay();
 
+	CreateVertices();
+	CreateTriangles();
+
 	ProcMesh->CreateMeshSection(sectionID, Vertices, Triangles, Normals, UV0, UpVertexColors, TArray<FProcMeshTangent>(), true);
 	ProcMesh->SetMaterial(0, Mat);
+	GEngine->AddOnScreenDebugMessage(-1, 999.0f, FColor::Yellow, FString::Printf(TEXT("Begin Play")));
 }
 
 // Called every frame
@@ -81,6 +85,7 @@ void APerlinProcTerrain::CreateTriangles()
 			Vertex++;
 
 		}
+		Vertex++;
 	}
 
 
