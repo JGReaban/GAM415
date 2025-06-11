@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "PerlinProcTerrain.h"
 
 AGAM415ReabanProjectile::AGAM415ReabanProjectile() 
 {
@@ -102,6 +103,17 @@ void AGAM415ReabanProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 
 		MatInstance->SetVectorParameterValue("Color", randColor);
 		MatInstance->SetScalarParameterValue("Frame", ranNumFrame);
+
+		// Deform Terrain if it's procedural
+
+		APerlinProcTerrain* procTerrain = Cast<APerlinProcTerrain>(OtherActor);
+
+		if (procTerrain)
+		{
+			procTerrain->AlterMesh(Hit.ImpactPoint);
+		}
+
+
 	}
 
 }
